@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>todo app</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet"  href="{{ url_for('static',filename='main.css')}}">
+  
+</head>
+<body>
+	{% include 'includes/_navbar.html' %}
+	<div class="todo-app">
+	<h1>Plan and bring structure to your day</h1>
+	<br/><br/>
+	
+	<form action="/add" method="POST">
+		<div class="center-block">
+		
+			<input type="text" name="title" placeholder="Enter Todo " style="width: 20vw">
+      <span>
+			<input type="date" id="Date" name="Date" placeholder="Enter Date" >
+		
+	</div>
+      <br>
+      
+			<button type="submit" class="todo-button" style="width: 4vw">Add</button>
+		
+	</span>
+	</form>
+	
+	<br>
+	{% if todo_list == [] %}
+
+	    <div class="alert alert-warning" role="alert">
+	    	No Todo available
+	    </div>
+	{% else %}
+	<div class="todo-row">
+	    <table class="table">
+	    	<thead>
+	    		<tr>
+	    			<th scope="col">
+              
+           </th>
+	    			<th scope="col">Title</th>
+	    			<th scope="col">Date</th>
+	    			<th scope="col">Status</th>
+	    			<th scope="col">Update</th>
+	    			<th scope="col">Delete</th>
+	    		</tr>  
+	    	</thead>
+	    	<tbody> 
+	{% for todo in todo_list %}
+	    <tr>
+	    	  <th scope="row">*</th>
+	    	  <td>{{ todo.title }}</td>
+          <td>{{ todo.Date }}</td>
+          {% if todo.complete == False %}
+
+              <td><span class="btn btn-warning">Not Completed</span></td>
+
+          {% else %}
+          
+              <td><span class="btn btn-success">Completed</span></td>
+          {% endif %}
+<div class="complete">
+          <td><a href="/update/{{ todo.id }}" class="btn btn-primary">Update</a></td></div>
+          <td><a href="/delete/{{ todo.id }}" class="btn btn-danger"> Delete</a></td>
+      </tr>
+
+	{% endfor %}
+</tbody>
+</table>
+{% endif %}
+</div>
+</div>
+</body>
+</html>
